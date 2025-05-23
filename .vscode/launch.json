@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Project0: Degrees",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/project0/degrees/degrees.py",
+            "cwd": "${workspaceFolder}/project0/degrees",
+            "console": "integratedTerminal",
+            "args":  ["small"]
+        },
+        {
+            "name": "Project0: Tic-Tac-Toe",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/project0/tictactoe/runner.py",
+            "cwd": "${workspaceFolder}/project0/tictactoe",
+            "console": "integratedTerminal",
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+{
+    "debugpy.showPythonInlineValues": false,
+    "python.terminal.executeInFileDir": false
+}
