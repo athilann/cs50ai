@@ -49,7 +49,7 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    return None
 
 
 def terminal(board):
@@ -70,4 +70,11 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    for i, row in enumerate(board):
+        for j, cell in enumerate(row):
+            if cell == EMPTY:
+                return (i, j)
+        else:
+            continue
+    return None
+
