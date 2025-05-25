@@ -49,6 +49,25 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
+    collum_0 = 0
+    collum_1 = 0
+    collum_2 = 0
+    cross_0 = 0
+    cross_1 = 0
+    for row in board :
+        row_Value = 0
+        for cell in row:
+            if cell == EMPTY:
+                row_Value += 0
+            elif cell == X:
+                row_Value += 1
+            elif cell == O:
+                row_Value += -1
+        if row_Value == 3:
+            return X
+        elif row_Value == -3:   
+            return O       
+                            
     return None
 
 
