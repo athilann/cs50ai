@@ -29,10 +29,14 @@ def player(board):
 def actions(board):
     available_Actions = set()
 
+    board_index = 0
     for row in board :
+        row_index = 0
         for cell in row:
             if cell == EMPTY:
-                available_Actions.add((board.index(row), row.index(cell)))
+                available_Actions.add((board_index, row_index))
+            row_index += 1
+        board_index += 1
     return available_Actions
 
 
