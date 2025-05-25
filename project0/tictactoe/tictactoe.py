@@ -37,6 +37,8 @@ def actions(board):
 
 
 def result(board, action):
+    if action[0] < 0 or action[0] > 2 or action[1] < 0 or action[1] > 2:
+        raise Exception("Invalid action")
     if board[action[0]][action[1]] is not EMPTY:
         raise Exception("Invalid action")
     new_Board = copy.deepcopy(board)
@@ -107,10 +109,12 @@ def terminal(board):
         return False
 
 def utility(board):
-    """
-    Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
-    """
-    raise NotImplementedError
+    if winner(board) == X:
+        return 1
+    elif winner(board) == O:
+        return -1
+    else:
+        return 0
 
 
 def minimax(board):
