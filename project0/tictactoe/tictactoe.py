@@ -46,28 +46,56 @@ def result(board, action):
 
 
 def winner(board):
-    """
-    Returns the winner of the game, if there is one.
-    """
-    collum_0 = 0
-    collum_1 = 0
-    collum_2 = 0
+
+    columns = [0,0,0]
     cross_0 = 0
     cross_1 = 0
+    board_index = 0
     for row in board :
         row_Value = 0
+        row_index = 0
+
         for cell in row:
+            cell_Value = 0
             if cell == EMPTY:
-                row_Value += 0
+                cell_Value += 0
             elif cell == X:
-                row_Value += 1
+                cell_Value += 1
             elif cell == O:
-                row_Value += -1
+                cell_Value += -1
+
+            if (0,0) == (board_index, row_index):
+                cross_0 += cell_Value
+            elif (0,2) == (board_index, row_index):
+                cross_1 += cell_Value
+            elif (1,1) == (board_index, row_index):
+                cross_0 += cell_Value
+                cross_1 += cell_Value
+            elif (2,0) == (board_index, row_index):
+                cross_1 += cell_Value
+            elif (2,2) == (board_index, row_index):
+                cross_0 += cell_Value    
+
+            columns[row_index] += cell_Value
+            row_Value += cell_Value
+            row_index += 1  
+
         if row_Value == 3:
             return X
         elif row_Value == -3:   
-            return O       
-                            
+            return O
+        board_index += 1       
+
+    if columns[0] == 3 or columns[1] == 3 or columns[2] == 3:
+        return X
+    elif columns[0] == -3 or columns[1] == -3 or columns[2] == -3:
+        return O
+    
+    if cross_0 == 3 or cross_1 == 3:
+        return X
+    elif cross_0 == -3 or cross_1 == -3:
+        return O
+
     return None
 
 
