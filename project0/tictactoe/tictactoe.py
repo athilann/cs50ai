@@ -101,7 +101,7 @@ def winner(board):
 
 def terminal(board):
     empty_Count = sum(cell == EMPTY for row in board for cell in row)
-    if empty_Count == 0:
+    if empty_Count == 0 or winner(board) is not None:
         return True
     else:
         return False
