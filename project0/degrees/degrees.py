@@ -87,7 +87,7 @@ def main():
 def shortest_path(source, target):
     """Finds a solution to maze, if one exists."""
 
-        # Keep track of number of states explored
+    # Keep track of number of states explored
     num_explored = 0
 
     # Initialize frontier to just the starting position
