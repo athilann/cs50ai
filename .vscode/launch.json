@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/project0/degrees/degrees.py",
             "cwd": "${workspaceFolder}/project0/degrees",
             "console": "integratedTerminal",
-            "args":  ["small"]
+            "args":  ["large"]
         },
         {
             "name": "Project0: Tic-Tac-Toe",
