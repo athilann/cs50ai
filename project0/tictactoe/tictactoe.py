@@ -4,7 +4,6 @@ Tic Tac Toe Player
 
 import math
 import copy
-from util import Node, StackFrontier, QueueFrontier
 
 X = "X"
 O = "O"
@@ -126,60 +125,32 @@ def utility(board):
 def minimax(board):
     if terminal(board):
         return None
-
-    num_explored = 0
-
-    target = 0
-    player_turn = player(board)
-    if player_turn == X:
-        target = 1
+    if player(board) == X:
+        action = minimax_value(None, board, True)
+        return action[0]
     else:
-        target = -1
+        action = minimax_value(None, board, False)
+        return action[0]
 
-    start = Node(state=board, parent=None, action=None)
-    frontier = QueueFrontier()
-    frontier.add(start)
-
-    explored = []
-    while True:
-
-        if frontier.empty():
-            print("States Explored:", num_explored)
-            return None
-
-        node = frontier.remove()
-        num_explored += 1
-
-        if utility(node.state) == target:
-            optimal_action = None
-            while node.parent is not None:
-                optimal_action = node.action
-                node = node.parent
-            print("States Explored:", num_explored)
-            return optimal_action
-
-        explored.append(node.state)
-
-        for action, state in add_next_movement(node.state):
-            if not frontier.contains_state(state) and state not in explored:
-                child = Node(state=state, parent=node, action=action)
-                frontier.add(child)
-
-def add_next_movement(board):
-    next_movements = []
-    current_player = player(board)
-    board_target = 0
-    if current_player == X:
-        board_target = 1
-    else:
-        board_target = -1
-
-    available_actions = actions(board)
-   
-    for action in available_actions:
-        new_board = result(board, action)
-        next_movements.append((action, new_board))
-        if utility(new_board) == board_target:
-           return next_movements 
+def minimax_value(initial_action, board, is_max_player):
+    if terminal(board):
+        return (initial_action, utility(board))
     
-    return next_movements
+    if is_max_player:
+        max_Eval = -math.inf
+        max_Action = None
+        for action in actions(board):
+            eval = minimax_value(action, result(board, action), False)
+            if eval[1] > max_Eval:
+                max_Eval = eval[1]
+                max_Action = eval[0]
+        return (max_Action, max_Eval)
+    else:
+        min_Eval = math.inf
+        min_Action = None
+        for action in actions(board):
+            eval = minimax_value(action, result(board, action), True)
+            if eval[1] < min_Eval:
+                min_Eval = eval[1]
+                min_Action = eval[0]
+        return (min_Action, min_Eval)
