@@ -4,6 +4,7 @@ Tic Tac Toe Player
 
 import math
 import copy
+from util import Node, StackFrontier, QueueFrontier
 
 X = "X"
 O = "O"
@@ -27,6 +28,7 @@ def player(board):
         return O
 
 def actions(board):
+    #TODO Use enumerate instead of board_index and row_index
     available_Actions = set()
 
     board_index = 0
@@ -52,7 +54,7 @@ def result(board, action):
 
 
 def winner(board):
-
+    # TODO Use enumerate instead of board_index and row_index
     columns = [0,0,0]
     cross_0 = 0
     cross_1 = 0
@@ -122,14 +124,62 @@ def utility(board):
 
 
 def minimax(board):
-    """
-    Returns the optimal action for the current player on the board.
-    """
-    for i, row in enumerate(board):
-        for j, cell in enumerate(row):
-            if cell == EMPTY:
-                return (i, j)
-        else:
-            continue
-    return None
+    if terminal(board):
+        return None
 
+    num_explored = 0
+
+    target = 0
+    player_turn = player(board)
+    if player_turn == X:
+        target = 1
+    else:
+        target = -1
+
+    start = Node(state=board, parent=None, action=None)
+    frontier = QueueFrontier()
+    frontier.add(start)
+
+    explored = []
+    while True:
+
+        if frontier.empty():
+            print("States Explored:", num_explored)
+            return None
+
+        node = frontier.remove()
+        num_explored += 1
+
+        if utility(node.state) == target:
+            optimal_action = None
+            while node.parent is not None:
+                optimal_action = node.action
+                node = node.parent
+            print("States Explored:", num_explored)
+            return optimal_action
+
+        explored.append(node.state)
+
+        for action, state in add_next_movement(node.state):
+            if not frontier.contains_state(state) and state not in explored:
+                child = Node(state=state, parent=node, action=action)
+                frontier.add(child)
+
+def add_next_movement(board):
+    next_movements = []
+    current_player = player(board)
+    board_target = 0
+    if current_player == X:
+        board_target = 1
+    else:
+        board_target = -1
+
+    available_actions = actions(board)
+   
+    for action in available_actions:
+        new_board = result(board, action)
+        next_movements.append((action, new_board))
+        if utility(new_board) == board_target:
+           return next_movements 
+    
+    return next_movements
