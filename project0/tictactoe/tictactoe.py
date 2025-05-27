@@ -126,31 +126,36 @@ def minimax(board):
     if terminal(board):
         return None
     if player(board) == X:
-        action = minimax_value(None, board, True)
-        return action[0]
-    else:
-        action = minimax_value(None, board, False)
-        return action[0]
-
-def minimax_value(initial_action, board, is_max_player):
-    if terminal(board):
-        return (initial_action, utility(board))
-    
-    if is_max_player:
-        max_Eval = -math.inf
-        max_Action = None
-        for action in actions(board):
-            eval = minimax_value(action, result(board, action), False)
-            if eval[1] > max_Eval:
-                max_Eval = eval[1]
-                max_Action = eval[0]
-        return (max_Action, max_Eval)
+       max_Eval = -math.inf
+       max_Action = None
+       for action in actions(board):
+            eval = Min_Value(result(board, action))
+            if eval > max_Eval:
+                max_Eval = eval
+                max_Action = action
+       return max_Action
     else:
         min_Eval = math.inf
         min_Action = None
         for action in actions(board):
-            eval = minimax_value(action, result(board, action), True)
-            if eval[1] < min_Eval:
-                min_Eval = eval[1]
-                min_Action = eval[0]
-        return (min_Action, min_Eval)
+            eval = Max_Value(result(board, action))
+            if eval < min_Eval:
+                min_Eval = eval
+                min_Action = action
+        return min_Action
+    
+def Max_Value(board):
+    if terminal(board):
+        return utility(board)
+    v = -math.inf
+    for action in actions(board):
+        v = max(v, Min_Value(result(board, action)))
+    return v
+
+def Min_Value(board):
+    if terminal(board):
+        return utility(board)
+    v = math.inf
+    for action in actions(board):
+        v = min(v, Max_Value(result(board, action)))
+    return v
