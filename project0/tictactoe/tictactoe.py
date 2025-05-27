@@ -26,12 +26,13 @@ def player(board):
     else:
         return O
 
+
 def actions(board):
-    #TODO Use enumerate instead of board_index and row_index
+    # TODO Use enumerate instead of board_index and row_index
     available_Actions = set()
 
     board_index = 0
-    for row in board :
+    for row in board:
         row_index = 0
         for cell in row:
             if cell == EMPTY:
@@ -54,11 +55,11 @@ def result(board, action):
 
 def winner(board):
     # TODO Use enumerate instead of board_index and row_index
-    columns = [0,0,0]
+    columns = [0, 0, 0]
     cross_0 = 0
     cross_1 = 0
     board_index = 0
-    for row in board :
+    for row in board:
         row_Value = 0
         row_index = 0
 
@@ -71,33 +72,33 @@ def winner(board):
             elif cell == O:
                 cell_Value += -1
 
-            if (0,0) == (board_index, row_index):
+            if (0, 0) == (board_index, row_index):
                 cross_0 += cell_Value
-            elif (0,2) == (board_index, row_index):
+            elif (0, 2) == (board_index, row_index):
                 cross_1 += cell_Value
-            elif (1,1) == (board_index, row_index):
+            elif (1, 1) == (board_index, row_index):
                 cross_0 += cell_Value
                 cross_1 += cell_Value
-            elif (2,0) == (board_index, row_index):
+            elif (2, 0) == (board_index, row_index):
                 cross_1 += cell_Value
-            elif (2,2) == (board_index, row_index):
-                cross_0 += cell_Value    
+            elif (2, 2) == (board_index, row_index):
+                cross_0 += cell_Value
 
             columns[row_index] += cell_Value
             row_Value += cell_Value
-            row_index += 1  
+            row_index += 1
 
         if row_Value == 3:
             return X
-        elif row_Value == -3:   
+        elif row_Value == -3:
             return O
-        board_index += 1       
+        board_index += 1
 
     if columns[0] == 3 or columns[1] == 3 or columns[2] == 3:
         return X
     elif columns[0] == -3 or columns[1] == -3 or columns[2] == -3:
         return O
-    
+
     if cross_0 == 3 or cross_1 == 3:
         return X
     elif cross_0 == -3 or cross_1 == -3:
@@ -113,6 +114,7 @@ def terminal(board):
     else:
         return False
 
+
 def utility(board):
     if winner(board) == X:
         return 1
@@ -126,14 +128,14 @@ def minimax(board):
     if terminal(board):
         return None
     if player(board) == X:
-       max_Eval = -math.inf
-       max_Action = None
-       for action in actions(board):
+        max_Eval = -math.inf
+        max_Action = None
+        for action in actions(board):
             eval = Min_Value(result(board, action))
             if eval > max_Eval:
                 max_Eval = eval
                 max_Action = action
-       return max_Action
+        return max_Action
     else:
         min_Eval = math.inf
         min_Action = None
@@ -143,7 +145,8 @@ def minimax(board):
                 min_Eval = eval
                 min_Action = action
         return min_Action
-    
+
+
 def Max_Value(board):
     if terminal(board):
         return utility(board)
@@ -151,6 +154,7 @@ def Max_Value(board):
     for action in actions(board):
         v = max(v, Min_Value(result(board, action)))
     return v
+
 
 def Min_Value(board):
     if terminal(board):
