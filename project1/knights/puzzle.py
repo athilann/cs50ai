@@ -31,6 +31,8 @@ knowledge1 = And(
 knowledge2 = And(
     Or(And(AKnight, Not(AKnave)),And(AKnave, Not(AKnight))),
     Or(And(BKnight, Not(BKnave)),And(BKnave, Not(BKnight))),
+    Or(Or(And(And(AKnave, BKnave), AKnight), And(Not(And(AKnave, BKnave)), AKnave)), Or(And(And(AKnight, BKnight), AKnight), And(Not(And(AKnight, BKnight)), AKnave))),
+    Or(And(And(BKnight,AKnave), BKnight),And(And(BKnave,AKnight), BKnight))
     # TODO
 )
 
