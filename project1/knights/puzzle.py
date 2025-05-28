@@ -32,8 +32,7 @@ knowledge2 = And(
     Or(And(AKnight, Not(AKnave)),And(AKnave, Not(AKnight))),
     Or(And(BKnight, Not(BKnave)),And(BKnave, Not(BKnight))),
     Or(Or(And(And(AKnave, BKnave), AKnight), And(Not(And(AKnave, BKnave)), AKnave)), Or(And(And(AKnight, BKnight), AKnight), And(Not(And(AKnight, BKnight)), AKnave))),
-    Or(And(And(BKnight,AKnave), BKnight),And(And(BKnave,AKnight), BKnight))
-    # TODO
+    Or(And(And(BKnight,AKnave), BKnight), And(And(BKnave,AKnight), BKnight))
 )
 
 # Puzzle 3
@@ -45,7 +44,10 @@ knowledge3 = And(
     Or(And(AKnight, Not(AKnave)),And(AKnave, Not(AKnight))),
     Or(And(BKnight, Not(BKnave)),And(BKnave, Not(BKnight))),
     Or(And(CKnight, Not(CKnave)),And(CKnave, Not(CKnight))),
-    # TODO
+    And(Or(And(AKnight, Not(AKnave)),And(AKnave, Not(AKnight))), AKnight),
+    And(Or(And(AKnave, BKnight), And(Not(And(AKnave, BKnight)), BKnave)),Or(And(CKnave, BKnight), And(Not(And(CKnave, BKnight)), BKnave))),
+    Or(And(AKnight, CKnight), And(AKnave, CKnave)),
+    # TODO Not sure if I sould test A for a Knave
 )
 
 
