@@ -20,6 +20,22 @@
             "program": "${workspaceFolder}/project0/tictactoe/runner.py",
             "cwd": "${workspaceFolder}/project0/tictactoe",
             "console": "integratedTerminal",
-        }
+        },
+        {
+            "name": "Project1: Knights",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/project1/knights/puzzle.py",
+            "cwd": "${workspaceFolder}/project1/knights",
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "Project1: Minesweeper",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/project1/minesweeper/runner.py",
+            "cwd": "${workspaceFolder}/project1/minesweeper",
+            "console": "integratedTerminal",
+        },
     ]
 }
