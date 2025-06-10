@@ -211,12 +211,47 @@ class MinesweeperAI():
             )
             self.knowledge.append(new_sentence)
 
-        for sentence in self.knowledge:
-            for mine in sentence.known_mines():
-                self.mark_mine(mine)
-            for safe in sentence.known_safes():
-                self.mark_safe(safe)
+        while True:
+            new_knowledge = False
+            new_mines = set()
+            new_safes = set()
+            for sentence in self.knowledge:
+                if sentence.known_mines():
+                    new_mines.update(sentence.known_mines())
+                    new_knowledge = True                    
+                if sentence.known_safes():
+                    new_safes.update(sentence.known_safes())
+                    new_knowledge = True
+            
+            if new_mines:
+                for mine in new_mines:
+                    self.mark_mine(mine)
+                        
+            if new_safes:
+                for safe in new_safes:
+                    self.mark_safe(safe)
+            
+            self.knowledge = [sentence for sentence in self.knowledge if sentence.cells]
+            
+            new_sentences = []
+            for sentence1 in self.knowledge:
+                 for sentence2 in self.knowledge:
+                     if sentence1.cells.issubset(sentence2.cells):
+                         new_sentence = Sentence(
+                             sentence1.cells - sentence2.cells,
+                             sentence1.count - sentence2.count
+                         )
+                         if new_sentence not in self.knowledge and len(new_sentence.cells) > 0:
+                             new_sentences.append(new_sentence)
+                             new_knowledge = True
+
+            self.knowledge.extend(new_sentences)
+
+            if not new_knowledge:
+                break
+
         
+
 
     def make_safe_move(self):
         """
