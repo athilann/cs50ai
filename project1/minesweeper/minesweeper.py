@@ -201,15 +201,17 @@ class MinesweeperAI():
                     if (0 <= row < self.height and 0 <= col < self.width and (row, col) != cell):
                         self.mark_safe((row, col))
         else:
-            new_sentence = Sentence(
-                { 
-                    (row, col) for row in range(cell[0] - 1, cell[0] + 2)
-                                for col in range(cell[1] - 1, cell[1] + 2)
-                                    if (0 <= row < self.height and 0 <= col < self.width and (row, col) != cell) 
-                },
-                count
-            )
-            self.knowledge.append(new_sentence)
+            sentence_cells = set()
+            know_mines_count = 0
+            for row in range(cell[0] - 1, cell[0] + 2):
+                for col in range(cell[1] - 1, cell[1] + 2):
+                    if (0 <= row < self.height and 0 <= col < self.width and (row, col) != cell):
+                        if (row, col) in self.mines:
+                            know_mines_count += 1
+                        elif (row, col) not in self.safes and (row, col) not in self.moves_made:
+                            sentence_cells.add((row, col)) 
+              
+            self.knowledge.append(Sentence(sentence_cells, count - know_mines_count))
 
         while True:
             new_knowledge = False
